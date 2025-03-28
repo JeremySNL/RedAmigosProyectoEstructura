@@ -13,6 +13,8 @@ namespace RedAmigosPersonal
         public int _edad;
         public string _numeroTelefonico;
         public string _email;
+        public Persona _siguiente;
+        public Persona _anterior;
         public Persona(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
             _nombre = nombre;
