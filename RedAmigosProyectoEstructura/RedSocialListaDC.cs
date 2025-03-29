@@ -10,26 +10,34 @@ namespace RedAmigosProyectoEstructura
 {
     internal class RedSocialListaDC
     {
+        //Atributos
         private PersonaNodo _cabeza;
         private PersonaNodo _cola;
         public int _cantidadPersonas;
+
+        //Médoto constructor
         public RedSocialListaDC()
         {
             _cabeza = _cola = null;
             _cantidadPersonas = 0;
         }
+
+        //Esta método agrega la persona por cola para tener un registro ascendente en orden de entrada
         public void AgregarPersona(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
             PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
-            _cantidadPersonas++;
+            //Si la lista esta vacía se agrega el nodo
             if (_cabeza == null)
             {
+                _cantidadPersonas++;
                 _cabeza = _cola = nuevoNodo;
                 _cola._siguiente = _cabeza;
                 return;
             }
+            //Si el método BuscarEmail() no encuentra persona con ese email, se agrega el nodo
             if (!BuscarEmail(email))
             {
+                _cantidadPersonas++;
                 _cola._siguiente = nuevoNodo;
                 nuevoNodo._anterior = _cola;
                 _cola = nuevoNodo;
@@ -37,14 +45,17 @@ namespace RedAmigosProyectoEstructura
                 _cabeza._anterior = _cola;
                 return;
             }
+            //Mensaje si encuentra una persona con el mismo email y no se agrega
             Console.WriteLine("La persona ya ha sido agregada en la Red Social.");
         }
         public bool BuscarEmail(string email)
         {
+            //Si la cola es el email que busca, la complejidad se vuelve O(1)
             if (_cola._email == email)
             {
                 return true;
             }
+            //Este bucle busca el email en la cabeza y despues los del medio
             PersonaNodo aux = _cabeza;
             do
             {
@@ -52,6 +63,7 @@ namespace RedAmigosProyectoEstructura
                     return true;
                 aux = aux._siguiente;
             } while (aux != _cabeza);
+            //Si no encuentra el email
             return false;
         }
         public void Mostrar()
