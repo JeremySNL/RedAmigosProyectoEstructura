@@ -8,19 +8,19 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RedAmigosProyectoEstructura
 {
-    internal class RedSocial
+    internal class RedSocialListaDC
     {
-        private Persona _cabeza;
-        private Persona _cola;
+        private PersonaNodo _cabeza;
+        private PersonaNodo _cola;
         public int _cantidadPersonas;
-        public RedSocial()
+        public RedSocialListaDC()
         {
             _cabeza = _cola = null;
             _cantidadPersonas = 0;
         }
         public void AgregarPorCabeza(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
-            Persona nuevoNodo = new Persona(nombre, apellido, edad, numeroTelefonico, email);
+            PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
             _cantidadPersonas++;
             if (_cabeza == null)
             {
@@ -36,7 +36,7 @@ namespace RedAmigosProyectoEstructura
         }
         public void AgregarPorCola(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
-            Persona nuevoNodo = new Persona(nombre, apellido, edad, numeroTelefonico, email);
+            PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
             _cantidadPersonas++;
             if (_cabeza == null)
             {
