@@ -66,7 +66,7 @@ namespace RedAmigosProyectoEstructura
             //Si no encuentra el email
             return false;
         }
-        public void Mostrar()
+        public void MostrarAscendente()
         {
             if (_cabeza == null)
             {
@@ -80,6 +80,22 @@ namespace RedAmigosProyectoEstructura
                 Console.Write($"{aux._nombre} <-> ");
                 aux = aux._siguiente;
             } while (aux != _cabeza);
+            Console.Write("...\n");
+        }
+        public void MostrarDescendente()
+        {
+            if (_cabeza == null)
+            {
+                Console.WriteLine("Null");
+                return;
+            }
+            PersonaNodo aux = _cola;
+            Console.Write("... <-> ");
+            do
+            {
+                Console.Write($"{aux._nombre} <-> ");
+                aux = aux._anterior;
+            } while (aux != _cola);
             Console.Write("...\n");
         }
         /*public void AgregarPorCabeza(string nombre, string apellido, int edad, string numeroTelefonico, string email)
