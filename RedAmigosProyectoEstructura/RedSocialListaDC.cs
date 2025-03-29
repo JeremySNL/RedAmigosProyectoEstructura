@@ -18,7 +18,59 @@ namespace RedAmigosProyectoEstructura
             _cabeza = _cola = null;
             _cantidadPersonas = 0;
         }
-        public void AgregarPorCabeza(string nombre, string apellido, int edad, string numeroTelefonico, string email)
+        public void AgregarPersona(string nombre, string apellido, int edad, string numeroTelefonico, string email)
+        {
+            PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
+            _cantidadPersonas++;
+            if (_cabeza == null)
+            {
+                _cabeza = _cola = nuevoNodo;
+                _cola._siguiente = _cabeza;
+                return;
+            }
+            if (!BuscarEmail(email))
+            {
+                _cola._siguiente = nuevoNodo;
+                nuevoNodo._anterior = _cola;
+                _cola = nuevoNodo;
+                _cola._siguiente = _cabeza;
+                _cabeza._anterior = _cola;
+                return;
+            }
+            Console.WriteLine("La persona ya ha sido agregada en la Red Social.");
+        }
+        public bool BuscarEmail(string email)
+        {
+            if (_cola._email == email)
+            {
+                return true;
+            }
+            PersonaNodo aux = _cabeza;
+            do
+            {
+                if (aux._email == email)
+                    return true;
+                aux = aux._siguiente;
+            } while (aux != _cabeza);
+            return false;
+        }
+        public void Mostrar()
+        {
+            if (_cabeza == null)
+            {
+                Console.WriteLine("Null");
+                return;
+            }
+            PersonaNodo aux = _cabeza;
+            Console.Write("... <-> ");
+            do
+            {
+                Console.Write($"{aux._nombre} <-> ");
+                aux = aux._siguiente;
+            } while (aux != _cabeza);
+            Console.Write("...\n");
+        }
+        /*public void AgregarPorCabeza(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
             PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
             _cantidadPersonas++;
@@ -34,23 +86,7 @@ namespace RedAmigosProyectoEstructura
             _cola._siguiente = _cabeza;
             _cabeza._anterior = _cola;
         }
-        public void AgregarPorCola(string nombre, string apellido, int edad, string numeroTelefonico, string email)
-        {
-            PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
-            _cantidadPersonas++;
-            if (_cabeza == null)
-            {
-                _cabeza = _cola = nuevoNodo;
-                _cola._siguiente = _cabeza;
-                return;
-            }
-            _cola._siguiente = nuevoNodo;
-            nuevoNodo._anterior = _cola;
-            _cola = nuevoNodo;
-            _cola._siguiente = _cabeza;
-            _cabeza._anterior = _cola;
-        }
-        /*public void Eliminar(int dato)
+        public void Eliminar(int dato)
         {
             if (_cabeza == null)
                 return;
@@ -87,38 +123,6 @@ namespace RedAmigosProyectoEstructura
                 aux = aux._siguiente;
             } while (aux._siguiente != _cabeza);
         }
-        public int Buscar(int dato)
-        {
-            int indice = 0;
-            if (_cola._dato == dato)
-            {
-                return _cantidadPersonas - 1;
-            }
-            Persona aux = _cabeza;
-            do
-            {
-                if (aux._dato == dato)
-                    return indice;
-                indice++;
-                aux = aux._siguiente;
-            } while (aux != _cabeza);
-            return -1;
-        }
-        public void Mostrar()
-        {
-            if (_cabeza == null)
-            {
-                Console.WriteLine("Null");
-                return;
-            }
-            Persona aux = _cabeza;
-            Console.Write("... <-> ");
-            do
-            {
-                Console.Write($"{aux._dato} <-> ");
-                aux = aux._siguiente;
-            } while (aux != _cabeza);
-            Console.Write("...\n");
-        }*/
+        */
     }
 }
