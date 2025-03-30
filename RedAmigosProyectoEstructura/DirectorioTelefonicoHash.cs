@@ -95,5 +95,9 @@ namespace RedAmigosProyectoEstructura
             }
             return centinela;
         }
+        public double MostrarFactorCarga()
+        {
+            return _factorCarga;
+        }
     }
 }

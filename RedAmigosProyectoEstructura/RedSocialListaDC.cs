@@ -110,6 +110,10 @@ namespace RedAmigosProyectoEstructura
             } while (aux != _cola);
             Console.Write("...\n");
         }
+        public double FactorCarga()
+        {
+            return _directorio.MostrarFactorCarga();
+        }
         /*public void AgregarPorCabeza(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
             PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
