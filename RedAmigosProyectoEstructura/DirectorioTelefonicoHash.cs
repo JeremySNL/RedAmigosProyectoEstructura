@@ -54,7 +54,6 @@ namespace RedAmigosProyectoEstructura
             if (!directorio[indice].Buscar(persona._numeroTelefonico))
             {
                 directorio[indice].AgregarPorCola(persona._nombre, persona._apellido, persona._edad, persona._numeroTelefonico, persona._email);
-                Console.WriteLine($"El Nodo de {persona._nombre} ha sido agregado");
                 _cantidadTelefonos++;
                 _factorCarga = (double)_cantidadTelefonos / _tamanoTabla;
             }

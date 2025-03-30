@@ -35,20 +35,21 @@ namespace RedAmigosProyectoEstructura
                 _cabeza = _cola = nuevoNodo;
                 _cola._siguiente = _cabeza;
                 _cola._anterior = _cabeza;
+                Console.WriteLine($"\nLa persona {nuevoNodo._nombre} ha sido agregado");
                 return;
             }
             //Buscando telefonos duplicados
             if (_directorio.BuscarNumero(nuevoNodo._numeroTelefonico))
             {
                 //Mensaje si encuentra una persona con el mismo numero telefónico y no se agrega
-                Console.WriteLine("Ya existe una persona con ese número de telefono en la Red Social.");
+                Console.WriteLine("\nYa existe una persona con ese número de telefono en la Red Social.");
                 return;
             }
             //Buscando correos duplicados
             if (BuscarEmail(email))
             {
                 //Mensaje si encuentra una persona con el mismo email y no se agrega
-                Console.WriteLine("Ya existe una persona con ese correo electrónico en la Red Social.");
+                Console.WriteLine("\nYa existe una persona con ese correo electrónico en la Red Social.");
                 return;
             }
             //Si el método BuscarEmail() no encuentra persona con ese email, se agrega el nodo
@@ -59,6 +60,7 @@ namespace RedAmigosProyectoEstructura
             _cola = nuevoNodo;
             _cola._siguiente = _cabeza;
             _cabeza._anterior = _cola;
+            Console.WriteLine($"\nLa persona {nuevoNodo._nombre} ha sido agregado");
         }
         public bool BuscarEmail(string email)
         {
