@@ -80,15 +80,15 @@ namespace RedAmigosProyectoEstructura
                 Console.WriteLine("2. Anterior");
                 Console.WriteLine("3. Seleccionar");
 
-                ConsoleKeyInfo key = Console.ReadKey();
+                int opcion = int.Parse(Console.ReadLine());
                 //Siguiente
-                if (key.Key == ConsoleKey.D1)
+                if (opcion == 1)
                     _puntero = _puntero._siguiente;
                 //Anterior
-                else if (key.Key == ConsoleKey.D2)
+                else if (opcion == 2)
                     _puntero = _puntero._anterior;
                 //Seleccionar
-                else if (key.Key == ConsoleKey.D3) 
+                else if (opcion == 3)
                     return new PersonaNodo(_puntero._nombre, _puntero._apellido, _puntero._edad, _puntero._numeroTelefonico, _puntero._email);
             }
         }
