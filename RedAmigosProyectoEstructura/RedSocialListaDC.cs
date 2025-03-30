@@ -12,6 +12,7 @@ namespace RedAmigosProyectoEstructura
         //Atributos
         private PersonaNodo _cabeza;
         private PersonaNodo _cola;
+        private PersonaNodo _puntero;
         private DirectorioTelefonicoHash _directorio;
         public int _cantidadPersonas;
 
@@ -35,6 +36,7 @@ namespace RedAmigosProyectoEstructura
                 _cabeza = _cola = nuevoNodo;
                 _cola._siguiente = _cabeza;
                 _cola._anterior = _cabeza;
+                _puntero = _cabeza;
                 Console.WriteLine($"\nLa persona {nuevoNodo._nombre} ha sido agregado");
                 return;
             }
@@ -61,6 +63,34 @@ namespace RedAmigosProyectoEstructura
             _cola._siguiente = _cabeza;
             _cabeza._anterior = _cola;
             Console.WriteLine($"\nLa persona {nuevoNodo._nombre} ha sido agregado");
+        }
+        public PersonaNodo ExplorarLista()
+        {
+            if (_cabeza == null)
+            {
+                Console.WriteLine("La lista está vacía.");
+                return null;
+            }
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"Mostrando: {_puntero._nombre} {_puntero._apellido} - {_puntero._edad} - {_puntero._numeroTelefonico} - {_puntero._email}");
+                Console.WriteLine("\nOpciones:");
+                Console.WriteLine("1. Siguiente");
+                Console.WriteLine("2. Anterior");
+                Console.WriteLine("3. Seleccionar");
+
+                ConsoleKeyInfo key = Console.ReadKey();
+                //Siguiente
+                if (key.Key == ConsoleKey.D1)
+                    _puntero = _puntero._siguiente;
+                //Anterior
+                else if (key.Key == ConsoleKey.D2)
+                    _puntero = _puntero._anterior;
+                //Seleccionar
+                else if (key.Key == ConsoleKey.D3) 
+                    return new PersonaNodo(_puntero._nombre, _puntero._apellido, _puntero._edad, _puntero._numeroTelefonico, _puntero._email);
+            }
         }
         public bool BuscarEmail(string email)
         {
