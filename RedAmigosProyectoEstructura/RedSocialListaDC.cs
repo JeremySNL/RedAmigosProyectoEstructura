@@ -12,6 +12,7 @@ namespace RedAmigosProyectoEstructura
         //Atributos
         private PersonaNodo _cabeza;
         private PersonaNodo _cola;
+        private DirectorioTelefonicoHash _directorio;
         public int _cantidadPersonas;
 
         //Médoto constructor
@@ -19,6 +20,7 @@ namespace RedAmigosProyectoEstructura
         {
             _cabeza = _cola = null;
             _cantidadPersonas = 0;
+            _directorio = new DirectorioTelefonicoHash(10);
         }
 
         //Esta método agrega la persona por cola para tener un registro ascendente en orden de entrada
@@ -29,23 +31,34 @@ namespace RedAmigosProyectoEstructura
             if (_cabeza == null)
             {
                 _cantidadPersonas++;
+                _directorio.AgregarTelefono(nuevoNodo);
                 _cabeza = _cola = nuevoNodo;
                 _cola._siguiente = _cabeza;
+                _cola._anterior = _cabeza;
+                return;
+            }
+            //Buscando telefonos duplicados
+            if (_directorio.BuscarNumero(nuevoNodo._numeroTelefonico))
+            {
+                //Mensaje si encuentra una persona con el mismo numero telefónico y no se agrega
+                Console.WriteLine("Ya existe una persona con ese número de telefono en la Red Social.");
+                return;
+            }
+            //Buscando correos duplicados
+            if (BuscarEmail(email))
+            {
+                //Mensaje si encuentra una persona con el mismo email y no se agrega
+                Console.WriteLine("Ya existe una persona con ese correo electrónico en la Red Social.");
                 return;
             }
             //Si el método BuscarEmail() no encuentra persona con ese email, se agrega el nodo
-            if (!BuscarEmail(email))
-            {
-                _cantidadPersonas++;
-                _cola._siguiente = nuevoNodo;
-                nuevoNodo._anterior = _cola;
-                _cola = nuevoNodo;
-                _cola._siguiente = _cabeza;
-                _cabeza._anterior = _cola;
-                return;
-            }
-            //Mensaje si encuentra una persona con el mismo email y no se agrega
-            Console.WriteLine("La persona ya ha sido agregada en la Red Social.");
+            _directorio.AgregarTelefono(nuevoNodo);
+            _cantidadPersonas++;
+            _cola._siguiente = nuevoNodo;
+            nuevoNodo._anterior = _cola;
+            _cola = nuevoNodo;
+            _cola._siguiente = _cabeza;
+            _cabeza._anterior = _cola;
         }
         public bool BuscarEmail(string email)
         {

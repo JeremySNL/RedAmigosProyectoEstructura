@@ -78,5 +78,22 @@ namespace RedAmigosProyectoEstructura
                 }
             }
         }
+        public bool BuscarNumero(string numeroTelefonico)
+        {
+            if (_cantidadTelefonos == 0)
+            {
+                Console.WriteLine("El directorio está vacio!");
+                return false;
+            }
+            bool centinela = false;
+            for (int i = 0; i < _tamanoTabla && !centinela; i++)
+            {
+                if (directorio[i] != null)
+                {
+                    centinela = directorio[i].Buscar(numeroTelefonico);
+                }
+            }
+            return centinela;
+        }
     }
 }
