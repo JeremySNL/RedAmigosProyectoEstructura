@@ -8,7 +8,7 @@ class Program
         while (true)
         {
             Console.WriteLine($"Persona seleccionada:\n\nNombre:            {persona._nombre}\nApellido:          {persona._apellido}\nEdad:              {persona._edad}\nNúmero Telefónico: {persona._numeroTelefonico}\nEmail:             {persona._email}");
-            Console.WriteLine("\nAcciones:\n1. Agregar amigo\n2. Imprimir lista de amigos aceptados\n3. Imprimir lista de amigos mutuos\n4. Imprimir lista de amigos no correspondido\n5. Responder solicitudes de amistad\n6. Armar arbol con sus amigos\n7. Salir");
+            Console.WriteLine("\nAcciones:\n\n1. Agregar amigo\n2. Imprimir lista de amigos aceptados\n3. Imprimir lista de amigos mutuos\n4. Imprimir lista de amigos no correspondido\n5. Responder solicitudes de amistad\n6. Armar arbol con sus amigos\n7. Salir");
             opcion = int.Parse(Console.ReadLine());
             if (opcion == 1)
             {
@@ -61,7 +61,7 @@ class Program
         while (true)
         {
             Console.WriteLine($"Total de personas en la red: {redSocial._cantidadPersonas}\n");
-            Console.WriteLine("Opciones:\n1. Agregar persona a la red social\n2. Seleccionar persona\n3. Imprimir listado de personas en orden ascendente\n4. Imprimir listado de personas en orden descendente\n5. Imprimir factor de carga del directorio\n6. Salir");
+            Console.WriteLine("Opciones:\n\n1. Agregar persona a la red social\n2. Seleccionar persona\n3. Imprimir listado de personas en orden ascendente\n4. Imprimir listado de personas en orden descendente\n5. Imprimir factor de carga del directorio\n6. Salir");
             opcion = int.Parse(Console.ReadLine());
             if (opcion == 1)
             {

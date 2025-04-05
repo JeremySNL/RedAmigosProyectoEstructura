@@ -23,73 +23,6 @@ namespace RedAmigosProyectoEstructura
             _cantidadPersonas = 0;
             _directorio = new DirectorioTelefonicoHash(10);
         }
-        public void ImprimirAmigosAceptados()
-        {
-            _puntero._listaAmigos.Mostrar();
-        }
-        public void ImprimirAmigosMutuos()
-        {
-            PersonaNodo aux = _cabeza;
-            do
-            {
-                if (aux != _puntero && aux._listaAmigos.BuscarEmail(_puntero._email) && _puntero._listaAmigos.BuscarEmail(aux._email))
-                {
-                    Console.Write($"{aux._nombre} -> ");
-                }
-                aux = aux._siguiente;
-            } while (aux != _cabeza);
-            Console.Write("Null");
-        }
-        public void ImprimirAmigosNoCorrespondidos()
-        {
-            PersonaNodo aux = _cabeza;
-            do
-            {
-                if (aux != _puntero && aux._listaAmigos.BuscarEmail(_puntero._email) && !_puntero._listaAmigos.BuscarEmail(aux._email))
-                {
-                    Console.Write($"{aux._nombre} -> ");
-                }
-                aux = aux._siguiente;
-            } while (aux != _cabeza);
-            Console.Write("Null");
-        }
-        public void ResponderSolicitudes()
-        {
-            PersonaNodo aux = _puntero._bandejaSolicitudes.Pop();
-            if (aux == null)
-                return;
-            int opcion;
-            while (true)
-            {
-                Console.WriteLine($"{aux._nombre}\n1. Aceptar\n2. Rechazar");
-                opcion = int.Parse(Console.ReadLine());
-                if (opcion == 1)
-                {
-                    _puntero._listaAmigos.AgregarPorCabeza(new PersonaNodo(aux._nombre, aux._apellido, aux._edad, aux._numeroTelefonico, aux._email));
-                    return;
-                }
-                else if (opcion == 2)
-                {
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Opcion invalida!");
-                }
-                Console.Clear();
-            }
-        }
-        public void AgregarAmigo(string email)
-        {
-            if (!BuscarEmail(email))
-                return;
-            PersonaNodo aux = BuscarEmailNodo(email);
-            aux._bandejaSolicitudes.Push(new PersonaNodo(_puntero._nombre, _puntero._apellido, _puntero._edad, _puntero._numeroTelefonico, _puntero._email));
-        }
-        public void MostrarAmigos()
-        {
-            _puntero._listaAmigos.Mostrar();
-        }
         //Esta método agrega la persona por cola para tener un registro ascendente en orden de entrada
         public void AgregarPersona(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
@@ -141,7 +74,7 @@ namespace RedAmigosProyectoEstructura
             {
                 Console.Clear();
                 Console.WriteLine($"Mostrando: {_puntero._nombre} {_puntero._apellido} - {_puntero._edad} - {_puntero._numeroTelefonico} - {_puntero._email}");
-                Console.WriteLine("\nOpciones:");
+                Console.WriteLine("\nOpciones:\n");
                 Console.WriteLine("1. Siguiente");
                 Console.WriteLine("2. Anterior");
                 Console.WriteLine("3. Seleccionar");
@@ -176,7 +109,7 @@ namespace RedAmigosProyectoEstructura
             //Si no encuentra el email
             return false;
         }
-        public PersonaNodo BuscarEmailNodo(string email)
+        private PersonaNodo BuscarEmailNodo(string email)
         {
             //Si la cola es el email que busca, la complejidad se vuelve O(1)
             if (_cola._email == email)
@@ -230,59 +163,89 @@ namespace RedAmigosProyectoEstructura
         {
             return _directorio.MostrarFactorCarga();
         }
-        /*public void AgregarPorCabeza(string nombre, string apellido, int edad, string numeroTelefonico, string email)
+        public void AgregarAmigo(string email)
         {
-            PersonaNodo nuevoNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
-            _cantidadPersonas++;
-            if (_cabeza == null)
+            if (!BuscarEmail(email))
             {
-                _cabeza = _cola = nuevoNodo;
-                _cola._siguiente = _cabeza;
+                Console.WriteLine("\nEsta persona no existe.");
                 return;
             }
-            nuevoNodo._siguiente = _cabeza;
-            _cabeza._anterior = nuevoNodo;
-            _cabeza = nuevoNodo;
-            _cola._siguiente = _cabeza;
-            _cabeza._anterior = _cola;
+            if (BuscarEmailNodo(email) == _puntero)
+            {
+                Console.WriteLine("\nNo puedes mandar una solicitud de amistad a ti mismo.");
+                return;
+            }
+            if (BuscarEmailNodo(email)._listaAmigos.BuscarEmail(_puntero._email))
+            {
+                Console.WriteLine("\nEsta persona ya existe como amigo.");
+                return;
+            }
+            if (BuscarEmailNodo(email)._bandejaSolicitudes.BuscarEmail(_puntero._email))
+            {
+                Console.WriteLine("\nSolicitud de amistad duplicada.");
+                return;
+            }
+            PersonaNodo aux = BuscarEmailNodo(email);
+            aux._bandejaSolicitudes.Push(new PersonaNodo(_puntero._nombre, _puntero._apellido, _puntero._edad, _puntero._numeroTelefonico, _puntero._email));
+            Console.WriteLine($"\nSolicitud de amistad enviada a : {aux._nombre}.");
         }
-        public void Eliminar(int dato)
+        public void ResponderSolicitudes()
         {
-            if (_cabeza == null)
-                return;
-            if (_cabeza._dato == dato)
+            PersonaNodo aux = _puntero._bandejaSolicitudes.Pop();
+            int opcion;
+            while (aux != null)
             {
-                if (_cabeza == _cola)
+                Console.WriteLine($"{aux._nombre}\n\n1. Aceptar\n2. Rechazar");
+                opcion = int.Parse(Console.ReadLine());
+                if (opcion == 1)
                 {
-                    _cabeza = _cola = null;
-                    return;
+                    Console.WriteLine($"\nHas aceptado la solicitud de {aux._nombre}.");
+                    _puntero._listaAmigos.AgregarPorCabeza(new PersonaNodo(aux._nombre, aux._apellido, aux._edad, aux._numeroTelefonico, aux._email));
                 }
-                _cabeza = _cabeza._siguiente;
-                _cola._siguiente = _cabeza;
-                _cabeza._anterior = _cola;
-                return;
+                else if (opcion == 2)
+                {
+                    Console.WriteLine($"\nHas rechazada la solicitud de {aux._nombre}.");
+                }
+                else
+                {
+                    Console.WriteLine("\nOpcion invalida!");
+                    continue;
+                }
+                aux = _puntero._bandejaSolicitudes.Pop();
+                Console.WriteLine("\nPresione cualquier tecla para continuar...");
+                Console.ReadKey();
+                Console.Clear();
             }
-            if (_cola._dato == dato)
-            {
-                _cola = _cola._anterior;
-                _cola._siguiente = _cabeza;
-                _cabeza._anterior = _cola;
-                return;
-            }
-            Persona aux = _cabeza;
+        }
+        public void ImprimirAmigosAceptados()
+        {
+            _puntero._listaAmigos.Mostrar();
+        }
+        public void ImprimirAmigosMutuos()
+        {
+            PersonaNodo aux = _cabeza;
             do
             {
-                if (aux._siguiente._dato == dato)
+                if (aux != _puntero && aux._listaAmigos.BuscarEmail(_puntero._email) && _puntero._listaAmigos.BuscarEmail(aux._email))
                 {
-                    Persona temp = aux._siguiente;
-                    aux._siguiente = temp._siguiente;
-                    temp._siguiente._anterior = aux;
-                    temp._siguiente = temp._anterior = null;
-                    return;
+                    Console.Write($"{aux._nombre} -> ");
                 }
                 aux = aux._siguiente;
-            } while (aux._siguiente != _cabeza);
+            } while (aux != _cabeza);
+            Console.Write("Null\n");
         }
-        */
+        public void ImprimirAmigosNoCorrespondidos()
+        {
+            PersonaNodo aux = _cabeza;
+            do
+            {
+                if (aux != _puntero && aux._listaAmigos.BuscarEmail(_puntero._email) && !_puntero._listaAmigos.BuscarEmail(aux._email))
+                {
+                    Console.Write($"{aux._nombre} -> ");
+                }
+                aux = aux._siguiente;
+            } while (aux != _cabeza);
+            Console.Write("Null\n");
+        }
     }
 }

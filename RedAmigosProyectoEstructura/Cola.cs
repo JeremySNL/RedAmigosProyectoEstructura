@@ -31,7 +31,7 @@ namespace RedAmigosProyectoEstructura
         {
             if (_cima == null)
             {
-                Console.WriteLine("La cola está vacia!!!");
+                Console.WriteLine("\nBandeja de solicitud de amistad vacia!");
                 return null;
             }
             PersonaNodo PersonaNodo = new PersonaNodo(_cima._nombre, _cima._apellido, _cima._edad, _cima._numeroTelefonico, _cima._email);
@@ -42,7 +42,7 @@ namespace RedAmigosProyectoEstructura
         {
             if (_cima == null)
             {
-                Console.WriteLine("La cola está vacia!!!");
+                Console.WriteLine("\nBandeja de solicitud de amistad vacia!");
                 return null;
             }
             return new PersonaNodo(_cima._nombre, _cima._apellido, _cima._edad, _cima._numeroTelefonico, _cima._email);
@@ -51,7 +51,7 @@ namespace RedAmigosProyectoEstructura
         {
             if (_cima == null)
             {
-                Console.WriteLine("La cola está vacia!!!");
+                Console.WriteLine("\nBandeja de solicitud de amistad vacia!");
                 return;
             }
             PersonaNodo aux = _cima;
@@ -61,6 +61,26 @@ namespace RedAmigosProyectoEstructura
                 aux = aux._siguiente;
             }
             Console.Write("Null\n");
+        }
+        public bool BuscarEmail(string email)
+        {
+            if (_cima == null)
+                return false;
+            //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
+            if (_cola._email == email)
+            {
+                return true;
+            }
+            //Este bucle busca el numero telefonico en la cabeza y despues los del medio
+            PersonaNodo aux = _cima;
+            while (aux != null)
+            {
+                if (aux._email == email)
+                    return true;
+                aux = aux._siguiente;
+            }
+            //Si no encuentra el numero telefonico
+            return false;
         }
     }
 }
