@@ -7,7 +7,8 @@ class Program
         Console.Clear();
         while (true)
         {
-            Console.WriteLine($"Persona seleccionada:\n\nNombre:            {persona._nombre}\nApellido:          {persona._apellido}\nEdad:              {persona._edad}\nNúmero Telefónico: {persona._numeroTelefonico}\nEmail:             {persona._email}");
+            int cantidadPersonas = redSocial.CantidadAmigos();
+            Console.WriteLine($"Persona seleccionada:\n\nNombre:            {persona._nombre}\nApellido:          {persona._apellido}\nEdad:              {persona._edad}\nNúmero Telefónico: {persona._numeroTelefonico}\nEmail:             {persona._email}\n\nCantidad de amigos: {cantidadPersonas}");
             Console.WriteLine("\nAcciones:\n\n1. Agregar amigo\n2. Imprimir lista de amigos aceptados\n3. Imprimir lista de amigos mutuos\n4. Imprimir lista de amigos no correspondido\n5. Responder solicitudes de amistad\n6. Armar arbol con sus amigos\n7. Salir");
             opcion = int.Parse(Console.ReadLine());
             if (opcion == 1)
@@ -53,10 +54,6 @@ class Program
         int opcion, edad;
         string nombre, apellido, numeroTelefonico, email;
         RedSocialListaDC redSocial = new RedSocialListaDC();
-        /*redSocial.AgregarPersona("Jeremy", "Sanchez Cabrera", 18, "809-393-7191", "elninogeremy@gmail.com");
-        redSocial.AgregarPersona("Jeremy", "Sanchez Cabrera", 18, "809-39-7191", "elninoremy@gmail.com");
-        redSocial.AgregarPersona("Jeremy", "Sanchez Cabrera", 18, "809-393-71", "elninogeremymail.com");
-*/
 
         while (true)
         {

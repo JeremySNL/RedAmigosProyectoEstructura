@@ -200,7 +200,8 @@ namespace RedAmigosProyectoEstructura
                 if (opcion == 1)
                 {
                     Console.WriteLine($"\nHas aceptado la solicitud de {aux._nombre}.");
-                    _puntero._listaAmigos.AgregarPorCabeza(new PersonaNodo(aux._nombre, aux._apellido, aux._edad, aux._numeroTelefonico, aux._email));
+                    _puntero._listaAmigos.AgregarPorCola(new PersonaNodo(aux._nombre, aux._apellido, aux._edad, aux._numeroTelefonico, aux._email));
+                    _puntero._cantidadAmigos++;
                 }
                 else if (opcion == 2)
                 {
@@ -246,6 +247,10 @@ namespace RedAmigosProyectoEstructura
                 aux = aux._siguiente;
             } while (aux != _cabeza);
             Console.Write("Null\n");
+        }
+        public int CantidadAmigos()
+        {
+            return _puntero._cantidadAmigos;
         }
     }
 }
