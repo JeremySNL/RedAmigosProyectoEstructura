@@ -51,9 +51,9 @@ namespace RedAmigosProyectoEstructura
                 directorio[indice] = new ListaEnlazadaSimple();
             }
             //Si ya hay una lista inicializada, se le agrega el nodo por cola
-            if (!directorio[indice].Buscar(persona._numeroTelefonico))
+            if (!directorio[indice].BuscarNumero(persona._numeroTelefonico))
             {
-                directorio[indice].AgregarPorCola(persona._nombre, persona._apellido, persona._edad, persona._numeroTelefonico, persona._email);
+                directorio[indice].AgregarPorCola(new PersonaNodo(persona._nombre, persona._apellido, persona._edad, persona._numeroTelefonico, persona._email));
                 _cantidadTelefonos++;
                 _factorCarga = (double)_cantidadTelefonos / _tamanoTabla;
             }
@@ -89,7 +89,7 @@ namespace RedAmigosProyectoEstructura
             {
                 if (directorio[i] != null)
                 {
-                    centinela = directorio[i].Buscar(numeroTelefonico);
+                    centinela = directorio[i].BuscarNumero(numeroTelefonico);
                 }
             }
             return centinela;

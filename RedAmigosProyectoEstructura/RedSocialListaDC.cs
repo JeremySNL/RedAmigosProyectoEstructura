@@ -19,11 +19,77 @@ namespace RedAmigosProyectoEstructura
         //Médoto constructor
         public RedSocialListaDC()
         {
-            _cabeza = _cola = null;
+            _cabeza = _cola = _puntero = null;
             _cantidadPersonas = 0;
             _directorio = new DirectorioTelefonicoHash(10);
         }
-
+        public void ImprimirAmigosAceptados()
+        {
+            _puntero._listaAmigos.Mostrar();
+        }
+        public void ImprimirAmigosMutuos()
+        {
+            PersonaNodo aux = _cabeza;
+            do
+            {
+                if (aux != _puntero && aux._listaAmigos.BuscarEmail(_puntero._email) && _puntero._listaAmigos.BuscarEmail(aux._email))
+                {
+                    Console.Write($"{aux._nombre} -> ");
+                }
+                aux = aux._siguiente;
+            } while (aux != _cabeza);
+            Console.Write("Null");
+        }
+        public void ImprimirAmigosNoCorrespondidos()
+        {
+            PersonaNodo aux = _cabeza;
+            do
+            {
+                if (aux != _puntero && aux._listaAmigos.BuscarEmail(_puntero._email) && !_puntero._listaAmigos.BuscarEmail(aux._email))
+                {
+                    Console.Write($"{aux._nombre} -> ");
+                }
+                aux = aux._siguiente;
+            } while (aux != _cabeza);
+            Console.Write("Null");
+        }
+        public void ResponderSolicitudes()
+        {
+            PersonaNodo aux = _puntero._bandejaSolicitudes.Pop();
+            if (aux == null)
+                return;
+            int opcion;
+            while (true)
+            {
+                Console.WriteLine($"{aux._nombre}\n1. Aceptar\n2. Rechazar");
+                opcion = int.Parse(Console.ReadLine());
+                if (opcion == 1)
+                {
+                    _puntero._listaAmigos.AgregarPorCabeza(new PersonaNodo(aux._nombre, aux._apellido, aux._edad, aux._numeroTelefonico, aux._email));
+                    return;
+                }
+                else if (opcion == 2)
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Opcion invalida!");
+                }
+                Console.Clear();
+            }
+        }
+        public void AgregarAmigo(string email)
+        {
+            if (!BuscarEmail(email))
+                return;
+            PersonaNodo aux = BuscarEmailNodo(email);
+            aux._bandejaSolicitudes.Push(new PersonaNodo(_puntero._nombre, _puntero._apellido, _puntero._edad, _puntero._numeroTelefonico, _puntero._email));
+        }
+        public void MostrarAmigos()
+        {
+            _puntero._listaAmigos.Mostrar();
+        }
         //Esta método agrega la persona por cola para tener un registro ascendente en orden de entrada
         public void AgregarPersona(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
@@ -109,6 +175,24 @@ namespace RedAmigosProyectoEstructura
             } while (aux != _cabeza);
             //Si no encuentra el email
             return false;
+        }
+        public PersonaNodo BuscarEmailNodo(string email)
+        {
+            //Si la cola es el email que busca, la complejidad se vuelve O(1)
+            if (_cola._email == email)
+            {
+                return _cola;
+            }
+            //Este bucle busca el email en la cabeza y despues los del medio
+            PersonaNodo aux = _cabeza;
+            do
+            {
+                if (aux._email == email)
+                    return aux;
+                aux = aux._siguiente;
+            } while (aux != _cabeza);
+            //Si no encuentra el email
+            return null;
         }
         public void MostrarAscendente()
         {

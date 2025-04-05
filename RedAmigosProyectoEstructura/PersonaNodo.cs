@@ -14,6 +14,8 @@ namespace RedAmigosProyectoEstructura
         public int _edad;
         public string _numeroTelefonico;
         public string _email;
+        public ListaEnlazadaSimple _listaAmigos;
+        public Cola _bandejaSolicitudes;
         public PersonaNodo _siguiente;
         public PersonaNodo _anterior;
 
@@ -25,6 +27,8 @@ namespace RedAmigosProyectoEstructura
             _edad = edad;
             _numeroTelefonico = numeroTelefonico;
             _email = email;
+            _listaAmigos = new ListaEnlazadaSimple();
+            _bandejaSolicitudes = new Cola();
         }
     }
 }

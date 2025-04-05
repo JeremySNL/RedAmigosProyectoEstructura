@@ -17,21 +17,33 @@ namespace RedAmigosProyectoEstructura
             _cabeza = null;
             _cola = null;
         }
-        public void AgregarPorCola(string nombre, string apellido, int edad, string numeroTelefonico, string email)
+        public void AgregarPorCola(PersonaNodo nuevaPersona)
         {
-            PersonaNodo nuevoPersonaNodo = new PersonaNodo(nombre, apellido, edad, numeroTelefonico, email);
             if (_cabeza == null)
             {
-                _cabeza = nuevoPersonaNodo;
-                _cola = nuevoPersonaNodo;
+                _cabeza = nuevaPersona;
+                _cola = nuevaPersona;
             }
             else
             {
-                _cola._siguiente = nuevoPersonaNodo;
-                _cola = nuevoPersonaNodo;
+                _cola._siguiente = nuevaPersona;
+                _cola = nuevaPersona;
             }
         }
-        public bool Buscar(string numeroTelefonico)
+        public void AgregarPorCabeza(PersonaNodo nuevaPersona)
+        {
+            if (_cabeza == null)
+            {
+                _cabeza = nuevaPersona;
+                _cola = nuevaPersona;
+            }
+            else
+            {
+                nuevaPersona._siguiente = _cabeza;
+                _cabeza = nuevaPersona;
+            }
+        }
+        public bool BuscarNumero(string numeroTelefonico)
         {
             if (_cabeza == null)
                 return false;
@@ -48,6 +60,26 @@ namespace RedAmigosProyectoEstructura
                     return true;
                 aux = aux._siguiente;
             } 
+            //Si no encuentra el numero telefonico
+            return false;
+        }
+        public bool BuscarEmail(string email)
+        {
+            if (_cabeza == null)
+                return false;
+            //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
+            if (_cola._email == email)
+            {
+                return true;
+            }
+            //Este bucle busca el numero telefonico en la cabeza y despues los del medio
+            PersonaNodo aux = _cabeza;
+            while (aux != null)
+            {
+                if (aux._email == email)
+                    return true;
+                aux = aux._siguiente;
+            }
             //Si no encuentra el numero telefonico
             return false;
         }

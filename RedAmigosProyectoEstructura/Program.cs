@@ -8,29 +8,36 @@ class Program
         while (true)
         {
             Console.WriteLine($"Persona seleccionada:\n\nNombre:            {persona._nombre}\nApellido:          {persona._apellido}\nEdad:              {persona._edad}\nNúmero Telefónico: {persona._numeroTelefonico}\nEmail:             {persona._email}");
-            Console.WriteLine("\nAcciones:\n1. Agregar amigo\n2. Imprimir lista de amigos correspondidos\n3. Imprimir lista de amigos mutuos\n4. Imprimir lista de amigos no correspondido\n5. Responder solicitudes de amistad\n6. Armar arbol con sus amigos\n7. Salir");
+            Console.WriteLine("\nAcciones:\n1. Agregar amigo\n2. Imprimir lista de amigos aceptados\n3. Imprimir lista de amigos mutuos\n4. Imprimir lista de amigos no correspondido\n5. Responder solicitudes de amistad\n6. Armar arbol con sus amigos\n7. Salir");
             opcion = int.Parse(Console.ReadLine());
-            if (opcion == 0)
+            if (opcion == 1)
             {
                 Console.Clear();
+                Console.Write("Digite el email de la persona: ");
+                string email = Console.ReadLine();
+                redSocial.AgregarAmigo(email);
             }
-            else if (opcion == 0)
+            else if (opcion == 2)
             {
                 Console.Clear();
+                redSocial.ImprimirAmigosAceptados();
             }
-            else if (opcion == 0)
+            else if (opcion == 3)
             {
                 Console.Clear();
+                redSocial.ImprimirAmigosMutuos();
             }
-            else if (opcion == 0)
+            else if (opcion == 4)
             {
                 Console.Clear();
+                redSocial.ImprimirAmigosNoCorrespondidos();
             }
-            else if (opcion == 0)
+            else if (opcion == 5)
             {
                 Console.Clear();
+                redSocial.ResponderSolicitudes();
             }
-            else if (opcion == 0)
+            else if (opcion == 6)
             {
                 Console.Clear();
             }
