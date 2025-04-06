@@ -1,7 +1,11 @@
 ﻿using RedAmigosProyectoEstructura;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
+using System.Runtime.InteropServices;
+
 class Program
 {
+
+
     public static ConsoleKeyInfo ImprimirMenuPrincipal(RedSocialListaDC redSocial)
     {
         ConsoleKeyInfo opcion;
@@ -18,15 +22,8 @@ class Program
     public static ConsoleKeyInfo ImprimirMenuAcciones(PersonaNodo persona, RedSocialListaDC redSocial)
     {
         ConsoleKeyInfo opcion;
-        int cantidadPersonas = redSocial.CantidadAmigos();
-        Console.WriteLine("Persona seleccionada:\n");
-        Console.WriteLine($"Nombre:            {persona.Nombre}");
-        Console.WriteLine($"Apellido:          {persona.Apellido}");
-        Console.WriteLine($"Edad:              {persona.Edad}");
-        Console.WriteLine($"Número Telefónico: {persona.NumeroTelefonico}");
-        Console.WriteLine($"Email:             {persona.Email}");
-        Console.WriteLine($"\nCantidad de amigos: {cantidadPersonas}");
-        
+        redSocial.ImprimirMenuSeleccionado(persona);
+
         Console.WriteLine("\nAcciones:\n");
         Console.WriteLine("1. Agregar amigo");
         Console.WriteLine("2. Imprimir lista de amigos aceptados");
@@ -37,6 +34,7 @@ class Program
         Console.WriteLine("7. Salir\n");
         return opcion = Console.ReadKey();
     }
+
     public static void MenuAcciones(PersonaNodo persona, RedSocialListaDC redSocial)
     {
         Console.Clear();
@@ -101,7 +99,7 @@ class Program
         redSocial.AgregarPersona(nombre, apellido, edad, numeroTelefonico, email);
     }
     static void Main()
-    {
+    {     
         RedSocialListaDC redSocial = new RedSocialListaDC();
 
         redSocial.AgregarPersona("Jeremy", "Sanchez", 18, "8909", "nino");
@@ -110,6 +108,7 @@ class Program
         redSocial.AgregarPersona("Hosmely", "Marte", 18, "829", "hosmely");
         redSocial.AgregarPersona("Bryan", "Rosa", 18, "1111", "bryan");
         redSocial.AgregarPersona("Juan", "Perez", 18, "2222", "juan");
+        Console.Clear();
 
         while (true)
         {
@@ -151,6 +150,3 @@ class Program
         }
     }
 }
-
-
-

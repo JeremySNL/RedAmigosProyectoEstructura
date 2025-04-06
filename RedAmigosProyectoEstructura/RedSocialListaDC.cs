@@ -80,23 +80,19 @@ namespace RedAmigosProyectoEstructura
             }
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine($"Mostrando: {_personaSeleccionada.Nombre} {_personaSeleccionada.Apellido} - {_personaSeleccionada.Edad} - {_personaSeleccionada.NumeroTelefonico} - {_personaSeleccionada.Email}");
-                Console.WriteLine("\nOpciones:\n");
-                Console.WriteLine("1. Siguiente");
-                Console.WriteLine("2. Anterior");
-                Console.WriteLine("3. Seleccionar");
+                ImprimirMenuSeleccion();
 
                 ConsoleKeyInfo opcion = Console.ReadKey();
                 //Siguiente
-                if (opcion.Key == ConsoleKey.D1 || opcion.Key == ConsoleKey.NumPad1)
+                if (opcion.Key == ConsoleKey.RightArrow)
                     _personaSeleccionada = _personaSeleccionada.Siguiente;
                 //Anterior
-                else if (opcion.Key == ConsoleKey.D2 || opcion.Key == ConsoleKey.NumPad2)
+                else if (opcion.Key == ConsoleKey.LeftArrow)
                     _personaSeleccionada = _personaSeleccionada.Anterior;
                 //Seleccionar
-                else if (opcion.Key == ConsoleKey.D3 || opcion.Key == ConsoleKey.NumPad3)
-                    return new PersonaNodo(_personaSeleccionada.Nombre, _personaSeleccionada.Apellido, _personaSeleccionada.Edad, _personaSeleccionada.NumeroTelefonico, _personaSeleccionada.Email);
+                else if (opcion.Key == ConsoleKey.Enter)
+                    return _personaSeleccionada;
+                    //return new PersonaNodo(_personaSeleccionada.Nombre, _personaSeleccionada.Apellido, _personaSeleccionada.Edad, _personaSeleccionada.NumeroTelefonico, _personaSeleccionada.Email);
                 else
                 {
                     Console.WriteLine("\nOpcion invalida!");
@@ -104,6 +100,96 @@ namespace RedAmigosProyectoEstructura
                 }
             }
         }
+        public void ImprimirMenuSeleccion()
+        {
+            Console.Clear();
+            int x = 80, y = 9, centerX = 60;
+
+            // Dibujar marco
+            Console.SetCursorPosition(centerX - x / 2, 0);
+            Console.Write("╔" + new string('═', x - 2) + "╗");
+
+            for (int i = 1; i < y; i++)
+            {
+                Console.SetCursorPosition(centerX - x / 2, i);
+                Console.Write("║" + new string(' ', x - 2) + "║");
+            }
+
+            Console.SetCursorPosition(centerX - x / 2, y);
+            Console.Write("╚" + new string('═', x - 2) + "╝");
+
+            // Controles y datos
+            string[] datos = 
+                {
+                    $"Nombre:   {_personaSeleccionada.Nombre}",
+                    $"Apellido: {_personaSeleccionada.Apellido}",
+                    $"Edad:     {_personaSeleccionada.Edad}",
+                    $"Numero:   {_personaSeleccionada.NumeroTelefonico}",
+                    $"Email:    {_personaSeleccionada.Email}",
+                    $"Cantidad de amigos: {_personaSeleccionada.CantidadAmigos}"
+                };
+
+            for (int i = 0; i < datos.Length; i++)
+            {
+                Console.SetCursorPosition(centerX - 10, y - 8 + i);
+                Console.Write(datos[i]);
+            }
+            Console.SetCursorPosition(centerX - x / 3, y - 1);
+            Console.Write("<-");
+            Console.SetCursorPosition(centerX + x / 3, y - 1);
+            Console.Write("->");
+            Console.SetCursorPosition(centerX - 2, y - 1);
+            Console.Write("Enter");
+            Console.SetCursorPosition(centerX - 27, 10);
+            Console.Write("Usar las flechitas para moverte y Enter para seleccionar");
+        }
+        public void ImprimirMenuSeleccionado(PersonaNodo persona)
+        {
+            Console.Clear();
+            int x = 80, y = 8, centerX = 60;
+
+            // Dibujar marco
+            Console.SetCursorPosition(centerX - x / 2, 0);
+            Console.Write("╔" + new string('═', x - 2) + "╗");
+
+            for (int i = 1; i < y; i++)
+            {
+                Console.SetCursorPosition(centerX - x / 2, i);
+                Console.Write("║" + new string(' ', x - 2) + "║");
+            }
+
+            Console.SetCursorPosition(centerX - x / 2, y);
+            Console.Write("╚" + new string('═', x - 2) + "╝");
+
+            // Controles y datos
+            string[] datos =
+                {
+                    $"Nombre:             {persona.Nombre}",
+                    $"Apellido:           {persona.Apellido}",
+                    $"Edad:               {persona.Edad}",
+                    $"Numero:             {persona.NumeroTelefonico}",
+                    $"Email:              {persona.Email}",
+                    $"Cantidad de amigos: {persona.CantidadAmigos}"
+                };
+
+            for (int i = 0; i < datos.Length; i++)
+            {
+                Console.SetCursorPosition(centerX - 10, y - 7 + i);
+                Console.Write(datos[i]);
+            }
+            Console.SetCursorPosition(centerX - 10, 10);
+        }
+        /*
+         *----------------------*
+         *        Jeremy        *
+         *        Sanchez       *
+         *          18          *
+         *         88888        *
+         *      j@gamil.com     *
+         *                      *
+         *  <-   |      |   ->  *
+         * ---------------------*
+        */
         public bool BuscarEmail(string email)
         {
             if (EsVacia())
@@ -225,7 +311,11 @@ namespace RedAmigosProyectoEstructura
             PersonaNodo aux = _personaSeleccionada.BandejaSolicitudes.Pop();
             while (aux != null)
             {
-                Console.WriteLine($"{aux.Nombre}\n\n1. Aceptar\n2. Rechazar");
+                ImprimirMenuSeleccionado(BuscarEmailNodo(aux.Email));
+                Console.SetCursorPosition(40, 10);
+                Console.WriteLine($"1. Aceptar");
+                Console.SetCursorPosition(80, 10);
+                Console.WriteLine($"2. Rechazar");
                 ConsoleKeyInfo opcion = Console.ReadKey();
                 if (opcion.Key == ConsoleKey.D1)
                 {

@@ -8,6 +8,7 @@ public class TablaHash
     private int _tamanoTabla;
     private double _factorCarga;
     private ListaEnlazadaSimple[] _listaColision;
+    
     //Constructor
     public TablaHash(int tamañoTabla)
     {
