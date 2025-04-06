@@ -1,4 +1,5 @@
 ﻿using RedAmigosProyectoEstructura;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 class Program
 {
     public static ConsoleKeyInfo ImprimirMenuPrincipal(RedSocialListaDC redSocial)
@@ -46,7 +47,7 @@ class Program
             {
                 Console.Clear();
                 Console.Write("Digite el email de la persona: ");
-                string email = Console.ReadLine();
+                string email = Console.ReadLine() ?? "";
                 redSocial.AgregarAmigo(email);
             }
             else if (opcion.Key == ConsoleKey.D2 || opcion.Key == ConsoleKey.NumPad2)
@@ -68,7 +69,6 @@ class Program
             {
                 Console.Clear();
                 redSocial.ResponderSolicitudes();
-                continue;
             }
             else if (opcion.Key == ConsoleKey.D6 || opcion.Key == ConsoleKey.NumPad6)
             {
@@ -84,11 +84,24 @@ class Program
             Console.Clear();
         }
     }
-
-    static void Main()
+    public static void AgregarPersona(RedSocialListaDC redSocial)
     {
         string nombre, apellido, numeroTelefonico, email;
         int edad;
+        Console.Write("Nombre:            ");
+        nombre = Console.ReadLine() ?? "";
+        Console.Write("Apellido:          ");
+        apellido = Console.ReadLine() ?? "";
+        Console.Write("Edad:              ");
+        edad = int.Parse(Console.ReadLine() ?? "0");
+        Console.Write("Número Telefónico: ");
+        numeroTelefonico = Console.ReadLine() ?? "";
+        Console.Write("Email:             ");
+        email = Console.ReadLine() ?? "";
+        redSocial.AgregarPersona(nombre, apellido, edad, numeroTelefonico, email);
+    }
+    static void Main()
+    {
         RedSocialListaDC redSocial = new RedSocialListaDC();
 
         redSocial.AgregarPersona("Jeremy", "Sanchez", 18, "8909", "nino");
@@ -104,24 +117,14 @@ class Program
             if (opcion.Key == ConsoleKey.D1 || opcion.Key == ConsoleKey.NumPad1)
             {
                 Console.Clear();
-                Console.Write("Nombre:            ");
-                nombre = Console.ReadLine();
-                Console.Write("Apellido:          ");
-                apellido = Console.ReadLine();
-                Console.Write("Edad:              ");
-                edad = int.Parse(Console.ReadLine());
-                Console.Write("Número Telefónico: ");
-                numeroTelefonico = Console.ReadLine();
-                Console.Write("Email:             ");
-                email = Console.ReadLine();
-                redSocial.AgregarPersona(nombre, apellido, edad, numeroTelefonico, email);
+                AgregarPersona(redSocial);
             }
             else if (opcion.Key == ConsoleKey.D2 || opcion.Key == ConsoleKey.NumPad2)
             {
                 Console.Clear();
-                PersonaNodo actual = redSocial.ExplorarLista();
-                if (actual != null)
-                    MenuAcciones(actual, redSocial);
+                PersonaNodo personaSeleccionada = redSocial.ExplorarLista();
+                if (personaSeleccionada != null)
+                    MenuAcciones(personaSeleccionada, redSocial);
             }
             else if (opcion.Key == ConsoleKey.D3 || opcion.Key == ConsoleKey.NumPad3)
             {

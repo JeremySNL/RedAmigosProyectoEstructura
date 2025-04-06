@@ -40,7 +40,7 @@ namespace RedAmigosProyectoEstructura
             //Actualizando los valores de la PersonaNodo (especialmente su lista de amigos)
             raiz = redSocial.ActualizarPersona(raiz);
             NodoArbol nodoRaiz = new NodoArbol(raiz);
-            tablaVisitados.Agregar(raiz);
+            tablaVisitados.AgregarEmail(raiz);
 
             PersonaNodo actual = raiz.ListaAmigos._cabeza;
             while (actual != null)

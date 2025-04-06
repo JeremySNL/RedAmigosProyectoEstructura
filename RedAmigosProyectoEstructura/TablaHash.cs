@@ -4,7 +4,7 @@ using RedAmigosProyectoEstructura;
 public class TablaHash
 {
     //Atrivutos
-    private int _cantidadEmails;
+    private int _cantidadElementos;
     private int _tamanoTabla;
     private double _factorCarga;
     private ListaEnlazadaSimple[] _listaColision;
@@ -13,7 +13,7 @@ public class TablaHash
     {
         _tamanoTabla = tamañoTabla;
         _factorCarga = 0;
-        _cantidadEmails = 0;
+        _cantidadElementos = 0;
         _listaColision = new ListaEnlazadaSimple[_tamanoTabla];
         for (int j = 0; j < _tamanoTabla; j++)
             _listaColision[j] = null;
@@ -35,27 +35,45 @@ public class TablaHash
         int claveTrans = Transformar(clave);
         return (int)claveTrans % _tamanoTabla;
     }
-    public void Agregar(PersonaNodo persona)
+    public void AgregarTelefono(PersonaNodo persona)
     {
         int indice = FuncionHash(persona.NumeroTelefonico);
+        //Si no hay una lista inicializada en el índice, se inicializa
+        if (_listaColision[indice] == null)
+        {
+            _listaColision[indice] = new ListaEnlazadaSimple();
+        }
+        //Si ya hay una lista inicializada, se le agrega el nodo por cola
+        if (!_listaColision[indice].BuscarNumero(persona.NumeroTelefonico))
+        {
+            _listaColision[indice].AgregarPorCola(new PersonaNodo(persona.Nombre, persona.Apellido, persona.Edad, persona.NumeroTelefonico, persona.Email));
+            _cantidadElementos++;
+            _factorCarga = (double) _cantidadElementos / _tamanoTabla;
+        }
+        else
+            Console.WriteLine("El número telefónico ya está registrado!");
+    }
+    public void AgregarEmail(PersonaNodo persona)
+    {
+        int indice = FuncionHash(persona.Email);
         //Si no hay una lista inicializada en el Indice, se inicializa
         if (_listaColision[indice] == null)
         {
             _listaColision[indice] = new ListaEnlazadaSimple();
         }
         //Si ya hay una lista inicializada, se le agrega el nodo por cola
-        if (!_listaColision[indice].BuscarNumero(persona.Email))
+        if (!_listaColision[indice].BuscarEmail(persona.Email))
         {
             _listaColision[indice].AgregarPorCola(new PersonaNodo(persona.Nombre, persona.Apellido, persona.Edad, persona.NumeroTelefonico, persona.Email));
-            _cantidadEmails++;
-            _factorCarga = (double)_cantidadEmails / _tamanoTabla;
+            _cantidadElementos++;
+            _factorCarga = (double) _cantidadElementos / _tamanoTabla;
         }
         else
             Console.WriteLine("El Email ya está registrado!");
     }
     public void MostrarTabla()
     {
-        if (_cantidadEmails == 0)
+        if (_cantidadElementos == 0)
         {
             Console.WriteLine("El directorio está vacio!");
             return;
@@ -68,10 +86,9 @@ public class TablaHash
             }
         }
     }
-
     public bool BuscarEmail(string numeroTelefonico)
     {
-        if (_cantidadEmails == 0)
+        if (_cantidadElementos == 0)
         {
             Console.WriteLine("El directorio está vacio!");
             return false;
@@ -86,4 +103,26 @@ public class TablaHash
         }
         return centinela;
     }
+    public bool BuscarNumero(string numeroTelefonico)
+    {
+        if (_cantidadElementos == 0)
+        {
+            Console.WriteLine("El directorio está vacio!");
+            return false;
+        }
+        bool centinela = false;
+        for (int i = 0; i < _tamanoTabla && !centinela; i++)
+        {
+            if (_listaColision[i] != null)
+            {
+                centinela = _listaColision[i].BuscarNumero(numeroTelefonico);
+            }
+        }
+        return centinela;
+    }
+    public double MostrarFactorCarga()
+    {
+        return _factorCarga;
+    }
+
 }

@@ -10,10 +10,10 @@ namespace RedAmigosProyectoEstructura
     internal class RedSocialListaDC
     {
         //Atributos
-        private PersonaNodo _cabeza;
-        private PersonaNodo _cola;
-        private PersonaNodo _personaSeleccionada;
-        private DirectorioTelefonicoHash _directorio;
+        private PersonaNodo? _cabeza;
+        private PersonaNodo? _cola;
+        private PersonaNodo? _personaSeleccionada;
+        private TablaHash _directorio;
         public int CantidadPersonas;
 
         //Médoto constructor
@@ -21,11 +21,11 @@ namespace RedAmigosProyectoEstructura
         {
             _cabeza = _cola = _personaSeleccionada = null;
             CantidadPersonas = 0;
-            _directorio = new DirectorioTelefonicoHash(10);
+            _directorio = new TablaHash(50);
         }
         public bool EsVacia()
         {
-            return _cabeza == null;
+            return _cabeza == null && _cola == null;
         }
 
         //Esta método agrega la persona por cola para tener un registro ascendente en orden de entrada
@@ -41,7 +41,7 @@ namespace RedAmigosProyectoEstructura
                 _cabeza = _cola = nuevoNodo;
                 _cola.Siguiente = _cabeza;
                 _cola.Anterior = _cabeza;
-                //Para seleccionar
+                //Para seleccionar en ExplorarLista()
                 _personaSeleccionada = _cabeza;
 
                 Console.WriteLine($"\nLa persona {nuevoNodo.Nombre} ha sido agregado");
@@ -104,9 +104,12 @@ namespace RedAmigosProyectoEstructura
                 }
             }
         }
-
         public bool BuscarEmail(string email)
         {
+            if (EsVacia())
+            {
+                return false;
+            }
             //Si la cola es el email que busca, la complejidad se vuelve O(1)
             if (_cola.Email == email)
             {
@@ -123,8 +126,12 @@ namespace RedAmigosProyectoEstructura
             //Si no encuentra el email
             return false;
         }
-        private PersonaNodo BuscarEmailNodo(string email)
+        private PersonaNodo? BuscarEmailNodo(string email)
         {
+            if (EsVacia())
+            {
+                return null;
+            }
             //Si la cola es el email que busca, la complejidad se vuelve O(1)
             if (_cola.Email == email)
             {
@@ -179,6 +186,11 @@ namespace RedAmigosProyectoEstructura
         }
         public void AgregarAmigo(string email)
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("\nRed Social vacia!");
+                return;
+            }
             if (!BuscarEmail(email))
             {
                 Console.WriteLine("\nEsta persona no existe.");
@@ -205,6 +217,11 @@ namespace RedAmigosProyectoEstructura
         }
         public void ResponderSolicitudes()
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("\nRed social vacia!");
+                return;
+            }
             PersonaNodo aux = _personaSeleccionada.BandejaSolicitudes.Pop();
             while (aux != null)
             {
@@ -232,11 +249,20 @@ namespace RedAmigosProyectoEstructura
         }
         public void ImprimirAmigosAceptados()
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("\nRed social vacia!");
+                return;
+            }
             _personaSeleccionada.ListaAmigos.Mostrar();
         }
-
         public void ImprimirAmigosMutuos()
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("\nRed social vacia!");
+                return;
+            }
             PersonaNodo aux = _cabeza;
             do
             {
@@ -250,6 +276,11 @@ namespace RedAmigosProyectoEstructura
         }
         public void ImprimirAmigosNoCorrespondidos()
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("\nRed social vacia!");
+                return;
+            }
             PersonaNodo aux = _cabeza;
             do
             {
@@ -263,10 +294,20 @@ namespace RedAmigosProyectoEstructura
         }
         public int CantidadAmigos()
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("\nRed social vacia!");
+                return 0;
+            }
             return _personaSeleccionada.CantidadAmigos;
         }
         public void ArmarArbol(RedSocialListaDC redSocial)
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("Red social vacia!");
+                return;
+            }
             TablaHash visitados = new TablaHash(50);
             NodoArbol raiz = NodoArbol.ConstruirArbol(_personaSeleccionada, visitados, redSocial);
             Console.WriteLine($"Representación de lista de los amigos de {_personaSeleccionada.Nombre}: \n");
@@ -275,6 +316,11 @@ namespace RedAmigosProyectoEstructura
         }
         public PersonaNodo ActualizarPersona(PersonaNodo persona)
         {
+            if (EsVacia())
+            {
+                Console.WriteLine("Red social vacia!");
+                return null;
+            }
             return BuscarEmailNodo(persona.Email);
         }
     }

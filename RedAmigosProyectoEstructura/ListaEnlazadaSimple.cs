@@ -17,9 +17,13 @@ namespace RedAmigosProyectoEstructura
             _cabeza = null;
             _cola = null;
         }
+        public bool EsVacia()
+        {
+            return _cabeza == null && _cola == null;
+        }
         public void AgregarPorCola(PersonaNodo nuevaPersona)
         {
-            if (_cabeza == null)
+            if (EsVacia())
             {
                 _cabeza = nuevaPersona;
                 _cola = nuevaPersona;
@@ -32,7 +36,7 @@ namespace RedAmigosProyectoEstructura
         }
         public void AgregarPorCabeza(PersonaNodo nuevaPersona)
         {
-            if (_cabeza == null)
+            if (EsVacia())
             {
                 _cabeza = nuevaPersona;
                 _cola = nuevaPersona;
@@ -45,7 +49,7 @@ namespace RedAmigosProyectoEstructura
         }
         public bool BuscarNumero(string numeroTelefonico)
         {
-            if (_cabeza == null)
+            if (EsVacia())
                 return false;
             //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
             if (_cola.NumeroTelefonico == numeroTelefonico)
@@ -65,7 +69,7 @@ namespace RedAmigosProyectoEstructura
         }
         public bool BuscarEmail(string email)
         {
-            if (_cabeza == null)
+            if (EsVacia())
                 return false;
             //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
             if (_cola.Email == email)
