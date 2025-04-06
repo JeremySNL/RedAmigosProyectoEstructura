@@ -8,10 +8,10 @@ using RedAmigosProyectoEstructura;
 
 namespace RedAmigosProyectoEstructura
 {
-    internal class ListaEnlazadaSimple
+    public class ListaEnlazadaSimple
     {
-        private PersonaNodo _cabeza;
-        private PersonaNodo _cola;
+        public PersonaNodo _cabeza;
+        public PersonaNodo _cola;
         public ListaEnlazadaSimple()
         {
             _cabeza = null;
@@ -26,7 +26,7 @@ namespace RedAmigosProyectoEstructura
             }
             else
             {
-                _cola._siguiente = nuevaPersona;
+                _cola.Siguiente = nuevaPersona;
                 _cola = nuevaPersona;
             }
         }
@@ -39,7 +39,7 @@ namespace RedAmigosProyectoEstructura
             }
             else
             {
-                nuevaPersona._siguiente = _cabeza;
+                nuevaPersona.Siguiente = _cabeza;
                 _cabeza = nuevaPersona;
             }
         }
@@ -48,7 +48,7 @@ namespace RedAmigosProyectoEstructura
             if (_cabeza == null)
                 return false;
             //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
-            if (_cola._numeroTelefonico == numeroTelefonico)
+            if (_cola.NumeroTelefonico == numeroTelefonico)
             {
                 return true;
             }
@@ -56,9 +56,9 @@ namespace RedAmigosProyectoEstructura
             PersonaNodo aux = _cabeza;
             while (aux != null)
             {
-                if (aux._numeroTelefonico == numeroTelefonico)
+                if (aux.NumeroTelefonico == numeroTelefonico)
                     return true;
-                aux = aux._siguiente;
+                aux = aux.Siguiente;
             } 
             //Si no encuentra el numero telefonico
             return false;
@@ -68,7 +68,7 @@ namespace RedAmigosProyectoEstructura
             if (_cabeza == null)
                 return false;
             //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
-            if (_cola._email == email)
+            if (_cola.Email == email)
             {
                 return true;
             }
@@ -76,9 +76,9 @@ namespace RedAmigosProyectoEstructura
             PersonaNodo aux = _cabeza;
             while (aux != null)
             {
-                if (aux._email == email)
+                if (aux.Email == email)
                     return true;
-                aux = aux._siguiente;
+                aux = aux.Siguiente;
             }
             //Si no encuentra el numero telefonico
             return false;
@@ -88,8 +88,8 @@ namespace RedAmigosProyectoEstructura
             PersonaNodo aux = _cabeza;
             while (aux != null)
             {
-                Console.Write($"{aux._nombre} -> ");
-                aux = aux._siguiente;
+                Console.Write($"{aux.Nombre} -> ");
+                aux = aux.Siguiente;
             }
             Console.Write("Null\n");
         }

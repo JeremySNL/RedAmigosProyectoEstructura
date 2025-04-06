@@ -44,23 +44,21 @@ namespace RedAmigosProyectoEstructura
         //
         public void AgregarTelefono(PersonaNodo persona)
         {
-            int indice = FuncionHash(persona._numeroTelefonico);
+            int indice = FuncionHash(persona.NumeroTelefonico);
             //Si no hay una lista inicializada en el índice, se inicializa
             if (directorio[indice] == null)
             {
                 directorio[indice] = new ListaEnlazadaSimple();
             }
             //Si ya hay una lista inicializada, se le agrega el nodo por cola
-            if (!directorio[indice].BuscarNumero(persona._numeroTelefonico))
+            if (!directorio[indice].BuscarNumero(persona.NumeroTelefonico))
             {
-                directorio[indice].AgregarPorCola(new PersonaNodo(persona._nombre, persona._apellido, persona._edad, persona._numeroTelefonico, persona._email));
+                directorio[indice].AgregarPorCola(new PersonaNodo(persona.Nombre, persona.Apellido, persona.Edad, persona.NumeroTelefonico, persona.Email));
                 _cantidadTelefonos++;
                 _factorCarga = (double)_cantidadTelefonos / _tamanoTabla;
             }
             else
-            {
                 Console.WriteLine("El número telefónico ya está registrado!");
-            }
         }
         public void MostrarTabla()
         {

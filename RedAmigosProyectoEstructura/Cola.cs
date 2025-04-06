@@ -8,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RedAmigosProyectoEstructura
 {
-    internal class Cola
+    public class Cola
     {
         private PersonaNodo _cima;
         private PersonaNodo _cola;
@@ -24,7 +24,7 @@ namespace RedAmigosProyectoEstructura
                 _cima = _cola = persona;
                 return;
             }
-            _cola._siguiente = persona;
+            _cola.Siguiente = persona;
             _cola = persona;
         }
         public PersonaNodo Pop()
@@ -34,8 +34,8 @@ namespace RedAmigosProyectoEstructura
                 Console.WriteLine("\nBandeja de solicitud de amistad vacia!");
                 return null;
             }
-            PersonaNodo PersonaNodo = new PersonaNodo(_cima._nombre, _cima._apellido, _cima._edad, _cima._numeroTelefonico, _cima._email);
-            _cima = _cima._siguiente;
+            PersonaNodo PersonaNodo = new PersonaNodo(_cima.Nombre, _cima.Apellido, _cima.Edad, _cima.NumeroTelefonico, _cima.Email);
+            _cima = _cima.Siguiente;
             return PersonaNodo;
         }
         public PersonaNodo PeekNodo()
@@ -45,8 +45,9 @@ namespace RedAmigosProyectoEstructura
                 Console.WriteLine("\nBandeja de solicitud de amistad vacia!");
                 return null;
             }
-            return new PersonaNodo(_cima._nombre, _cima._apellido, _cima._edad, _cima._numeroTelefonico, _cima._email);
+            return new PersonaNodo(_cima.Nombre, _cima.Apellido, _cima.Edad, _cima.NumeroTelefonico, _cima.Email);
         }
+
         public void Show()
         {
             if (_cima == null)
@@ -57,8 +58,8 @@ namespace RedAmigosProyectoEstructura
             PersonaNodo aux = _cima;
             while (aux != null)
             {
-                Console.Write($"{aux._nombre} -> ");
-                aux = aux._siguiente;
+                Console.Write($"{aux.Nombre} -> ");
+                aux = aux.Siguiente;
             }
             Console.Write("Null\n");
         }
@@ -67,7 +68,7 @@ namespace RedAmigosProyectoEstructura
             if (_cima == null)
                 return false;
             //Si la cola es el numero telefonico que busca, la complejidad se vuelve O(1)
-            if (_cola._email == email)
+            if (_cola.Email == email)
             {
                 return true;
             }
@@ -75,9 +76,9 @@ namespace RedAmigosProyectoEstructura
             PersonaNodo aux = _cima;
             while (aux != null)
             {
-                if (aux._email == email)
+                if (aux.Email == email)
                     return true;
-                aux = aux._siguiente;
+                aux = aux.Siguiente;
             }
             //Si no encuentra el numero telefonico
             return false;

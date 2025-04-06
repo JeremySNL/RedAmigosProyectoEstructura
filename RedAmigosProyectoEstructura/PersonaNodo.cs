@@ -3,34 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RedAmigosProyectoEstructura;
 
 namespace RedAmigosProyectoEstructura
 {
-    internal class PersonaNodo
+    public class PersonaNodo
     {
         //Atributos
-        public string _nombre;
-        public string _apellido;
-        public int _edad;
-        public string _numeroTelefonico;
-        public string _email;
-        public int _cantidadAmigos;
-        public ListaEnlazadaSimple _listaAmigos;
-        public Cola _bandejaSolicitudes;
-        public PersonaNodo _siguiente;
-        public PersonaNodo _anterior;
+        public string Nombre;
+        public string Apellido;
+        public int Edad;
+        public string NumeroTelefonico;
+        public string Email;
+        public int CantidadAmigos;
+        public ListaEnlazadaSimple ListaAmigos;
+        public Cola BandejaSolicitudes;
+        public PersonaNodo Siguiente;
+        public PersonaNodo Anterior;
 
         //Método Constructor
         public PersonaNodo(string nombre, string apellido, int edad, string numeroTelefonico, string email)
         {
-            _nombre = nombre;
-            _apellido = apellido;
-            _edad = edad;
-            _numeroTelefonico = numeroTelefonico;
-            _email = email;
-            _listaAmigos = new ListaEnlazadaSimple();
-            _bandejaSolicitudes = new Cola();
-            _cantidadAmigos = 0;
+            Nombre = nombre;
+            Apellido = apellido;
+            Edad = edad;
+            NumeroTelefonico = numeroTelefonico;
+            Email = email;
+            ListaAmigos = new ListaEnlazadaSimple();
+            BandejaSolicitudes = new Cola();
+            CantidadAmigos = 0;
         }
     }
 }
