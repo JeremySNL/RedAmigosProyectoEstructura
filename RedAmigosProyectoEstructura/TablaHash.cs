@@ -72,21 +72,6 @@ public class TablaHash
         else
             Console.WriteLine("El Email ya está registrado!");
     }
-    public void MostrarTabla()
-    {
-        if (_cantidadElementos == 0)
-        {
-            Console.WriteLine("El directorio está vacio!");
-            return;
-        }
-        for (int i = 0; i < _tamanoTabla; i++)
-        {
-            if (_listaColision[i] != null)
-            {
-                _listaColision[i].Mostrar();
-            }
-        }
-    }
     public bool BuscarEmail(string numeroTelefonico)
     {
         if (_cantidadElementos == 0)
@@ -125,5 +110,19 @@ public class TablaHash
     {
         return _factorCarga;
     }
-
+    public void MostrarTabla()
+    {
+        if (_cantidadElementos == 0)
+        {
+            Console.WriteLine("El directorio está vacio!");
+            return;
+        }
+        for (int i = 0; i < _tamanoTabla; i++)
+        {
+            if (_listaColision[i] != null)
+            {
+                _listaColision[i].Mostrar();
+            }
+        }
+    }
 }

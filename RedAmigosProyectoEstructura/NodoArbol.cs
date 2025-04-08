@@ -38,7 +38,7 @@ namespace RedAmigosProyectoEstructura
         public static NodoArbol ConstruirArbol(PersonaNodo raiz, TablaHash tablaVisitados, RedSocialListaDC redSocial)
         {
             //Actualizando los valores de la PersonaNodo (especialmente su lista de amigos)
-            raiz = redSocial.ActualizarPersona(raiz);
+            raiz = redSocial.BuscarEmailNodo(raiz.Email);
             NodoArbol nodoRaiz = new NodoArbol(raiz);
             tablaVisitados.AgregarEmail(raiz);
 

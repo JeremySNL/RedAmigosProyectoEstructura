@@ -4,8 +4,6 @@ using System.Runtime.InteropServices;
 
 class Program
 {
-
-
     public static ConsoleKeyInfo ImprimirMenuPrincipal(RedSocialListaDC redSocial)
     {
         ConsoleKeyInfo opcion;
@@ -19,10 +17,11 @@ class Program
         Console.WriteLine("6. Salir\n");
         return opcion = Console.ReadKey();
     }
+
     public static ConsoleKeyInfo ImprimirMenuAcciones(PersonaNodo persona, RedSocialListaDC redSocial)
     {
         ConsoleKeyInfo opcion;
-        redSocial.ImprimirMenuSeleccionado(persona);
+        redSocial.ImprimirSeleccionado(persona);
 
         Console.WriteLine("\nAcciones:\n");
         Console.WriteLine("1. Agregar amigo");
@@ -33,6 +32,7 @@ class Program
         Console.WriteLine("6. Armar arbol con sus amigos");
         Console.WriteLine("7. Salir\n");
         return opcion = Console.ReadKey();
+
     }
 
     public static void MenuAcciones(PersonaNodo persona, RedSocialListaDC redSocial)
