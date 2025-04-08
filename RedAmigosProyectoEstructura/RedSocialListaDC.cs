@@ -7,14 +7,21 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RedAmigosProyectoEstructura
 {
+    
     internal class RedSocialListaDC
     {
+
         //Atributos
         private PersonaNodo? _cabeza;
         private PersonaNodo? _cola;
         private PersonaNodo? _personaSeleccionada;
         private TablaHash _directorio;
         public int CantidadPersonas;
+
+
+
+
+
 
         //Médoto constructor
         public RedSocialListaDC()
@@ -78,24 +85,107 @@ namespace RedAmigosProyectoEstructura
                 Console.WriteLine("La lista está vacía.");
                 return null;
             }
+
+            int tamanomax = 0;
+
+            
+
+
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine($"Mostrando: {_personaSeleccionada.Nombre} {_personaSeleccionada.Apellido} - {_personaSeleccionada.Edad} - {_personaSeleccionada.NumeroTelefonico} - {_personaSeleccionada.Email}");
-                Console.WriteLine("\nOpciones:\n");
-                Console.WriteLine("1. Siguiente");
-                Console.WriteLine("2. Anterior");
-                Console.WriteLine("3. Seleccionar");
+                
+                int Maximo = tamanomax;
 
+                int[] tamanos =
+                {
+                    _personaSeleccionada.Nombre.Length * 2, _personaSeleccionada.Apellido.Length * 2,
+                    _personaSeleccionada.Edad.ToString().Length * 2, _personaSeleccionada.NumeroTelefonico.Length * 2,
+                    _personaSeleccionada.Email.Length * 2 - 30
+                };
+
+                foreach(int tamano in tamanos)
+                {
+                    if(tamano > Maximo)
+                    {
+                        Maximo = tamano;
+                    }
+                }
+
+                tamanomax = Maximo;
+               
+               
+               
+                
+                Console.Clear();
+                MostrarCuadro(0, 0, 30, 10, tamanomax);
+                
+                Console.SetCursorPosition(6, 2);
+                Console.WriteLine($"Nombre: {_personaSeleccionada.Nombre}");
+
+                Console.SetCursorPosition(6, 3);
+                Console.WriteLine($"Apellido: {_personaSeleccionada.Apellido}");
+
+                Console.SetCursorPosition(6, 4);
+                Console.WriteLine($"Edad: {_personaSeleccionada.Edad}");
+
+                Console.SetCursorPosition(6,5);
+                Console.WriteLine($"Numero Telefonico: {_personaSeleccionada.NumeroTelefonico}");
+                
+                Console.SetCursorPosition(6,6);
+                Console.WriteLine($"Email: {_personaSeleccionada.Email}");
+                if (tamanomax > 40)
+                {
+                    Console.SetCursorPosition(1, 10);
+                    Console.WriteLine("<-");
+                    Console.SetCursorPosition(1, 11);
+                    Console.WriteLine("A");
+
+
+                    Console.SetCursorPosition(tamanomax - 2, 10);
+                    Console.WriteLine("->");
+                    Console.SetCursorPosition(tamanomax - 2, 11);
+                    Console.WriteLine(" D");
+
+                    Console.SetCursorPosition(tamanomax/2 - 2, 10);
+                    Console.WriteLine("↑");
+                    Console.SetCursorPosition(tamanomax/2 - 2, 11);
+                    Console.WriteLine("Enter");
+                }
+                else
+                {
+                    Console.SetCursorPosition(1, 10);
+                    Console.WriteLine("<-");
+                    Console.SetCursorPosition(1, 11);
+                    Console.WriteLine("A");
+
+
+                    Console.SetCursorPosition(38, 10);
+                    Console.WriteLine("->");
+                    Console.SetCursorPosition(38, 11);
+                    Console.WriteLine(" D");
+
+                    Console.SetCursorPosition(19, 10);
+                    Console.WriteLine("↑");
+                    Console.SetCursorPosition(17, 11);
+                    Console.WriteLine("Enter");
+                }
+                
+                
+
+
+                Console.SetCursorPosition(0, 14);
+
+
+                tamanomax = 0;
                 ConsoleKeyInfo opcion = Console.ReadKey();
                 //Siguiente
-                if (opcion.Key == ConsoleKey.D1 || opcion.Key == ConsoleKey.NumPad1)
+                if (opcion.Key == ConsoleKey.RightArrow || opcion.Key == ConsoleKey.D)
                     _personaSeleccionada = _personaSeleccionada.Siguiente;
                 //Anterior
-                else if (opcion.Key == ConsoleKey.D2 || opcion.Key == ConsoleKey.NumPad2)
+                else if (opcion.Key == ConsoleKey.LeftArrow || opcion.Key == ConsoleKey.A)
                     _personaSeleccionada = _personaSeleccionada.Anterior;
                 //Seleccionar
-                else if (opcion.Key == ConsoleKey.D3 || opcion.Key == ConsoleKey.NumPad3)
+                else if (opcion.Key == ConsoleKey.Enter || opcion.Key == ConsoleKey.W)
                     return new PersonaNodo(_personaSeleccionada.Nombre, _personaSeleccionada.Apellido, _personaSeleccionada.Edad, _personaSeleccionada.NumeroTelefonico, _personaSeleccionada.Email);
                 else
                 {
@@ -104,6 +194,50 @@ namespace RedAmigosProyectoEstructura
                 }
             }
         }
+        public void ImprimirMenuSeleccion()
+        {
+        }
+        public void MostrarCuadro(int x, int y, int ancho, int alto, int TamanoMax)
+        { 
+            int tamanodefault = 40;
+
+
+            Console.Clear(); 
+
+            if (tamanodefault >= TamanoMax )
+            {
+                ancho = tamanodefault;
+            }
+            else
+            {
+                ancho = TamanoMax;
+            }
+
+            // Dibujar los bordes del cuadro
+            for (int i = 0; i < ancho; i++)
+            {
+                    // Línea superior
+                    Console.SetCursorPosition(x + i, y);
+                    Console.Write("█");
+
+                    // Línea inferior
+                    Console.SetCursorPosition(x + i, y + alto - 1);
+                    Console.Write("█");
+            }
+
+            for (int i = 0; i < alto; i++)
+            {
+                // Línea izquierda
+                Console.SetCursorPosition(x, y + i);
+                Console.Write("██");
+
+                // Línea derecha
+                Console.SetCursorPosition(x + ancho - 1, y + i);
+                Console.Write("██");
+            }
+        }
+
+
         public bool BuscarEmail(string email)
         {
             if (EsVacia())
